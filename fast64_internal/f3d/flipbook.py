@@ -226,8 +226,17 @@ def drawFlipbookGroupProperty(
 def ootFlipbookReferenceIsValid(texReference: str) -> bool:
     return re.search(f"0x0([0-9A-F])000000", texReference) is not None
 
+# START GAME SPECIFIC CALLBACKS
+def mmFlipbookReferenceIsValid(texReference: str) -> bool:
+    return re.search(f"0x0([0-9A-F])000000", texReference) is not None
+
 
 def ootFlipbookRequirementMessage(layout: bpy.types.UILayout):
+    layout.label(text="To use this, material must use a")
+    layout.label(text="texture reference with name = 0x0?000000.")
+
+
+def mmFlipbookRequirementMessage(layout: bpy.types.UILayout):
     layout.label(text="To use this, material must use a")
     layout.label(text="texture reference with name = 0x0?000000.")
 
@@ -250,6 +259,23 @@ def ootFlipbookAnimUpdate(self, armatureObj: bpy.types.Object, segment: str, ind
                         setTexNodeImage(material, i, flipbookIndex)
 
 
+def mmFlipbookAnimUpdate(self, armatureObj: bpy.types.Object, segment: str, index: int):
+    for child in armatureObj.children:
+        if not isinstance(child.data, bpy.types.Mesh):
+            continue
+        for material in child.data.materials:
+            for i in range(2):
+                flipbook = getattr(material.flipbookGroup, "flipbook" + str(i))
+                texProp = getattr(material.f3d_mat, "tex" + str(i))
+                if usesFlipbook(material, flipbook, i, True, mmFlipbookReferenceIsValid):
+                    match = re.search(f"0x0([0-9A-F])000000", texProp.tex_reference)
+                    if match is None:
+                        continue
+                    if match.group(1) == segment:
+                        # Remember that index 0 = auto, and keyframed values start at 1
+                        flipbookIndex = min((index - 1 if index > 0 else 0), len(flipbook.textures) - 1)
+                        setTexNodeImage(material, i, flipbookIndex)
+
 # END GAME SPECIFIC CALLBACKS
 
 # we use a handler since update functions are not called when a property is animated.
@@ -269,6 +295,20 @@ def flipbookAnimHandler(dummy):
                 ):
                     ootFlipbookAnimUpdate(obj.data, obj, "8", obj.ootLinkTextureAnim.eyes)
                     ootFlipbookAnimUpdate(obj.data, obj, "9", obj.ootLinkTextureAnim.mouth)
+    elif bpy.context.scene.gameEditorMode == "MM":
+        for obj in bpy.data.objects:
+            if isinstance(obj.data, bpy.types.Armature):
+                # we only want to update texture on keyframed armatures.
+                # this somewhat mitigates the issue of two skeletons using the same flipbook material.
+                if obj.animation_data is None or obj.animation_data.action is None:
+                    continue
+                action = obj.animation_data.action
+                if not (
+                    action.fcurves.find("mmLinkTextureAnim.eyes") is None
+                    or action.fcurves.find("mmLinkTextureAnim.mouth") is None
+                ):
+                    mmFlipbookAnimUpdate(obj.data, obj, "8", obj.mmLinkTextureAnim.eyes)
+                    mmFlipbookAnimUpdate(obj.data, obj, "9", obj.mmLinkTextureAnim.mouth)
     else:
         pass
 
@@ -283,14 +323,14 @@ class Flipbook_MaterialPanel(bpy.types.Panel):
 
     @classmethod
     def poll(cls, context):
-        return context.material is not None and context.scene.gameEditorMode in ["OOT"]
+        return context.material is not None and (context.scene.gameEditorMode in ["OOT"] or context.scene.gameEditorMode in ["MM"])
 
     def draw(self, context):
         layout = self.layout
         mat = context.material
         col = layout.column()
 
-        if context.scene.gameEditorMode == "OOT":
+        if context.scene.gameEditorMode == "OOT" or context.scene.gameEditorMode == "MM":
             checkFlipbookReference = ootFlipbookReferenceIsValid
             drawFlipbookRequirementMessage = ootFlipbookRequirementMessage
         else:

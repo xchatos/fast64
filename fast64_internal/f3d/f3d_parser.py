@@ -8,6 +8,7 @@ from .f3d_material import (
     update_preset_manual,
     all_combiner_uses,
     ootEnumDrawLayers,
+    mmEnumDrawLayers,
     TextureProperty,
     F3DMaterialProperty,
     update_node_values_of_material,
@@ -2375,6 +2376,7 @@ def f3d_parser_register():
     bpy.types.Scene.DLRemoveDoubles = bpy.props.BoolProperty(name="Remove Doubles", default=True)
     bpy.types.Scene.DLImportNormals = bpy.props.BoolProperty(name="Import Normals", default=True)
     bpy.types.Scene.DLImportDrawLayer = bpy.props.EnumProperty(name="Draw Layer", items=ootEnumDrawLayers)
+    bpy.types.Scene.DLImportDrawLayer = bpy.props.EnumProperty(name="Draw Layer", items=mmEnumDrawLayers)
     bpy.types.Scene.DLImportOtherFiles = bpy.props.CollectionProperty(type=ImportFileProperty)
     bpy.types.Scene.DLImportOtherFilesIndex = bpy.props.IntProperty()
 

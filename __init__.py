@@ -15,6 +15,10 @@ from .fast64_internal.oot import OOT_Properties, oot_register, oot_unregister
 from .fast64_internal.oot.props_panel_main import OOT_ObjectProperties
 from .fast64_internal.utility_anim import utility_anim_register, utility_anim_unregister, ArmatureApplyWithMeshOperator
 
+from .fast64_internal.mm import MM_Properties, mm_register, mm_unregister
+from .fast64_internal.mm.props_panel_main import MM_ObjectProperties
+#from .fast64_internal.utility_anim import utility_anim_register, utility_anim_unregister, ArmatureApplyWithMeshOperator
+
 from .fast64_internal.f3d.f3d_material import mat_register, mat_unregister
 from .fast64_internal.f3d.f3d_render_engine import render_engine_register, render_engine_unregister
 from .fast64_internal.f3d.f3d_writer import f3d_writer_register, f3d_writer_unregister
@@ -51,6 +55,7 @@ bl_info = {
 gameEditorEnum = (
     ("SM64", "SM64", "Super Mario 64"),
     ("OOT", "OOT", "Ocarina Of Time"),
+    ("MM", "MM", "Majora's Mask"),
 )
 
 
@@ -271,6 +276,7 @@ class Fast64_Properties(bpy.types.PropertyGroup):
 
     sm64: bpy.props.PointerProperty(type=SM64_Properties, name="SM64 Properties")
     oot: bpy.props.PointerProperty(type=OOT_Properties, name="OOT Properties")
+    mm: bpy.props.PointerProperty(type=MM_Properties, name="MM Properties")
     settings: bpy.props.PointerProperty(type=Fast64Settings_Properties, name="Fast64 Settings")
     renderSettings: bpy.props.PointerProperty(type=Fast64RenderSettings_Properties, name="Fast64 Render Settings")
 
@@ -399,6 +405,7 @@ def upgrade_changed_props():
     SM64_Properties.upgrade_changed_props()
     SM64_ObjectProperties.upgrade_changed_props()
     OOT_ObjectProperties.upgrade_changed_props()
+    MM_ObjectProperties.upgrade_changed_props()
 
 
 def upgrade_scene_props_node():
@@ -419,6 +426,8 @@ def gameEditorUpdate(self, context):
     if self.gameEditorMode == "SM64":
         self.f3d_type = "F3D"
     elif self.gameEditorMode == "OOT":
+        self.f3d_type = "F3DEX2/LX2"
+    elif self.gameEditorMode == "MM":
         self.f3d_type = "F3DEX2/LX2"
 
 
@@ -449,6 +458,7 @@ def register():
     bsdf_conv_register()
     sm64_register(True)
     oot_register(True)
+    mm_register(True)
 
     for cls in classes:
         register_class(cls)
@@ -495,6 +505,7 @@ def unregister():
     f3d_parser_unregister()
     sm64_unregister(True)
     oot_unregister(True)
+    mm_unregister(True)
     mat_unregister()
     bsdf_conv_unregister()
     bsdf_conv_panel_unregsiter()

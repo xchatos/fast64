@@ -94,6 +94,12 @@ ootEnumDrawLayers = [
     ("Overlay", "Overlay", "Overlay"),
 ]
 
+mmEnumDrawLayers = [
+    ("Opaque", "Opaque", "Opaque"),
+    ("Transparent", "Transparent", "Transparent"),
+    ("Overlay", "Overlay", "Overlay"),
+]
+
 
 drawLayerSM64toOOT = {
     "0": "Opaque",
@@ -165,7 +171,7 @@ def update_draw_layer(self, context):
         drawLayer = material.f3d_mat.draw_layer
         if context.scene.gameEditorMode == "SM64":
             drawLayer.oot = drawLayerSM64toOOT[drawLayer.sm64]
-        elif context.scene.gameEditorMode == "OOT":
+        elif context.scene.gameEditorMode == "OOT" or context.scene.gameEditorMode == "MM":
             if material.f3d_mat.draw_layer.oot == "Opaque":
                 if int(material.f3d_mat.draw_layer.sm64) > 4:
                     material.f3d_mat.draw_layer.sm64 = "1"
@@ -261,9 +267,10 @@ def update_blend_method(material: Material, context):
 class DrawLayerProperty(PropertyGroup):
     sm64: bpy.props.EnumProperty(items=sm64EnumDrawLayers, default="1", update=update_draw_layer)
     oot: bpy.props.EnumProperty(items=ootEnumDrawLayers, default="Opaque", update=update_draw_layer)
+    mm: bpy.props.EnumProperty(items=mmEnumDrawLayers, default="Opaque", update=update_draw_layer)
 
     def key(self):
-        return (self.sm64, self.oot)
+        return (self.sm64, self.oot, self.mm)
 
 
 def getTmemWordUsage(texFormat, width, height):
@@ -878,6 +885,8 @@ class F3DPanel(Panel):
             prop_split(layout, material.f3d_mat.draw_layer, "sm64", "Draw Layer")
         elif context.scene.gameEditorMode == "OOT":
             prop_split(layout, material.f3d_mat.draw_layer, "oot", "Draw Layer")
+        elif context.scene.gameEditorMode == "MM":
+            prop_split(layout, material.f3d_mat.draw_layer, "mm", "Draw Layer")
 
     def ui_misc(self, f3dMat: "F3DMaterialProperty", inputCol: UILayout, showCheckBox: bool) -> None:
         if f3dMat.rdp_settings.g_ambocclusion:
@@ -4012,7 +4021,7 @@ class F3DRenderSettingsPanel(Panel):
         prop_split(globalSettingsBox, renderSettings, "lightDirection", "Light Direction")
         prop_split(globalSettingsBox, renderSettings, "useWorldSpaceLighting", "Use World Space Lighting")
 
-        if context.scene.gameEditorMode in ["SM64", "OOT"]:
+        if context.scene.gameEditorMode in ["SM64", "OOT", "MM"]:
             layout.separator(factor=0.5)
             gameSettingsBox = layout.box()
             gameSettingsBox.label(text="Preview Context")
@@ -4024,7 +4033,7 @@ class F3DRenderSettingsPanel(Panel):
 
                     gameSettingsBox.prop(renderSettings, "sm64Area")
 
-                case "OOT":
+                case "OOT" | "MM":
                     if renderSettings.ootSceneObject is not None:
                         gameSettingsBox.prop(renderSettings, "useObjectRenderPreview", text="Use Scene for Preview")
 

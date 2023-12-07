@@ -170,7 +170,7 @@ def oot_unregister(unregisterPanels):
     csMotion_preview_unregister()
     csMotion_panels_unregister()
     csMotion_props_unregister()
-    csMotion_ops_unregister()
+    #csMotion_ops_unregister()
 
     if unregisterPanels:
         oot_panel_unregister()

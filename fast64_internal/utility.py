@@ -1528,6 +1528,8 @@ def get_blender_to_game_scale(context):
             return context.scene.blenderToSM64Scale
         case "OOT":
             return context.scene.ootBlenderScale
+        case "MM":
+            return context.scene.mmBlenderScale
         case "F3D":
             # TODO: (V5) create F3D game editor mode, utilize that scale
             return context.scene.blenderF3DScale
@@ -1576,9 +1578,61 @@ def ootGetSceneOrRoomHeader(parent, idx, isRoom):
         if idx - 4 >= len(altHeaders.cutsceneHeaders):
             return None
         return altHeaders.cutsceneHeaders[idx - 4]
+    
+
+
+def mmGetSceneOrRoomHeader(parent, idx, isRoom):
+    # This should be in oot_utility.py, but it is needed in f3d_material.py
+    # which creates a circular import. The real problem is that the F3D render
+    # settings stuff should be in a place which can import both SM64 and OoT
+    # code without circular dependencies.
+    if idx < 0:
+        raise PluginError("Alternate scene/room header index too low: " + str(idx))
+    target = "Room" if isRoom else "Scene"
+    altHeaders = getattr(parent, "ootAlternate" + target + "Headers")
+    if idx == 0:
+        return getattr(parent, "oot" + target + "Header")
+    elif 1 <= idx <= 3:
+        if idx == 1:
+            ret = altHeaders.childNightHeader
+        elif idx == 2:
+            ret = altHeaders.adultDayHeader
+        else:
+            ret = altHeaders.adultNightHeader
+        return None if ret.usePreviousHeader else ret
+    else:
+        if idx - 4 >= len(altHeaders.cutsceneHeaders):
+            return None
+        return altHeaders.cutsceneHeaders[idx - 4]
+
 
 
 def ootGetBaseOrCustomLight(prop, idx, toExport: bool, errIfMissing: bool):
+    # This should be in oot_utility.py, but it is needed in render_settings.py
+    # which creates a circular import. The real problem is that the F3D render
+    # settings stuff should be in a place which can import both SM64 and OoT
+    # code without circular dependencies.
+    assert idx in {0, 1}
+    col = getattr(prop, "diffuse" + str(idx))
+    dir = (mathutils.Vector((1.0, 1.0, 1.0)) * (1.0 if idx == 0 else -1.0)).normalized()
+    if getattr(prop, "useCustomDiffuse" + str(idx)):
+        light = getattr(prop, "diffuse" + str(idx) + "Custom")
+        if light is None:
+            if errIfMissing:
+                raise PluginError("Error: Diffuse " + str(idx) + " light object not set in a scene lighting property.")
+            else:
+                col = light.color
+                lightObj = lightDataToObj(light)
+                dir = getObjDirectionVec(lightObj, toExport)
+    col = mathutils.Vector(tuple(c for c in col))
+    if toExport:
+        col, dir = exportColor(col), normToSigned8Vector(dir)
+    return col, dir
+
+
+
+
+def mmGetBaseOrCustomLight(prop, idx, toExport: bool, errIfMissing: bool):
     # This should be in oot_utility.py, but it is needed in render_settings.py
     # which creates a circular import. The real problem is that the F3D render
     # settings stuff should be in a place which can import both SM64 and OoT
