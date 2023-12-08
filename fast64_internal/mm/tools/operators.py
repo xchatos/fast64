@@ -13,8 +13,8 @@ class MM_AddWaterBox(AddWaterBox):
     bl_idname = "object.mm_add_water_box"
 
     scale: FloatProperty(default=10)
-    preset: StringProperty(default="mm_shaded_texture_transparent")
-    matName: StringProperty(default="mm_water_mat")
+    preset: StringProperty(default="oot_shaded_texture_transparent")
+    matName: StringProperty(default="oot_water_mat")
 
     def setEmptyType(self, emptyObj):
         emptyObj.mmEmptyType = "Water Box"
@@ -27,7 +27,7 @@ class MM_AddDoor(Operator):
     bl_options = {"REGISTER", "UNDO", "PRESET"}
 
     scale: FloatProperty(default=2)
-    preset: StringProperty(default="mm_shaded_solid")
+    preset: StringProperty(default="oot_shaded_solid")
     matName: StringProperty(default="unused_mat")
 
     def execute(self, context):
@@ -69,7 +69,7 @@ class MM_AddScene(Operator):
     bl_options = {"REGISTER", "UNDO", "PRESET"}
 
     scale: FloatProperty(default=30)
-    preset: StringProperty(default="mm_shaded_solid")
+    preset: StringProperty(default="oot_shaded_solid")
     matName: StringProperty(default="floor_mat")
 
     def execute(self, context):
