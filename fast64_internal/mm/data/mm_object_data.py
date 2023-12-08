@@ -38,11 +38,11 @@ class Mm_ObjectData:
         self.mmEnumObjectKey = self.getObjectIDList(lastIndex + 1, False)
 
         # create the legacy object list for old blends
-        self.mmEnumObjectIDLegacy = self.getObjectIDList(self.objectsByKey["obj_timeblock"].index + 1, True)
+        #self.mmEnumObjectIDLegacy = self.getObjectIDList(self.objectsByKey["obj_timeblock"].index + 1, True)
 
         # validate the legacy list, if there's any None element then something's wrong
-        if self.deletedEntry in self.mmEnumObjectIDLegacy:
-            raise PluginError("ERROR: Legacy Object List doesn't match!")
+        #if self.deletedEntry in self.mmEnumObjectIDLegacy:
+            #raise PluginError("ERROR: Legacy Object List doesn't match!")
 
     def getObjectIDList(self, max: int, isLegacy: bool):
         """Generates and returns the object list in the right order"""

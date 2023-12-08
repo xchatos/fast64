@@ -30,7 +30,7 @@ from ..mm_constants import (
 
 class MMObjectProperty(PropertyGroup):
     expandTab: BoolProperty(name="Expand Tab")
-    objectKey: EnumProperty(items=mmData.objectData.mmEnumObjectKey, default="obj_human")
+    objectKey: EnumProperty(items=mmData.objectData.mmEnumObjectKey, default="object_link_child")
     objectIDCustom: StringProperty(default="OBJECT_CUSTOM")
 
     @staticmethod
@@ -41,9 +41,9 @@ class MMObjectProperty(PropertyGroup):
     def draw_props(self, layout: UILayout, headerIndex: int, index: int, objName: str):
         isLegacy = True if "objectID" in self else False
 
-        if isLegacy:
-            objectName = mmData.objectData.mmEnumObjectIDLegacy[self["objectID"]][1]
-        elif self.objectKey != "Custom":
+        #if isLegacy:
+            #objectName = mmData.objectData.mmEnumObjectIDLegacy[self["objectID"]][1]
+        if self.objectKey != "Custom":
             objectName = mmData.objectData.objectsByKey[self.objectKey].name
         else:
             objectName = self.objectIDCustom

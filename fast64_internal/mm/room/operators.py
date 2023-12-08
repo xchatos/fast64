@@ -12,7 +12,7 @@ class MM_SearchObjectEnumOperator(Operator):
     bl_property = "objectKey"
     bl_options = {"REGISTER", "UNDO"}
 
-    objectKey: EnumProperty(items=mmData.objectData.mmEnumObjectKey, default="obj_human")
+    objectKey: EnumProperty(items=mmData.objectData.mmEnumObjectKey, default="object_link_child")
     headerIndex: IntProperty(default=0, min=0)
     index: IntProperty(default=0, min=0)
     objName: StringProperty()
