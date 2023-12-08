@@ -89,7 +89,7 @@ def mm_panel_register():
     mm_spline_panels_register()
     mm_anim_panels_register()
     mm_skeleton_panels_register()
-    mm_cutscene_panels_register()
+    #mm_cutscene_panels_register()
 
 
 def mm_panel_unregister():
@@ -127,8 +127,8 @@ def mm_register(registerPanels):
     mm_file_register()
     mm_anim_props_register()
 
-    mm_csMotion_ops_register()
-    mm_csMotion_props_register()
+    #mm_csMotion_ops_register()
+    #mm_csMotion_props_register()
     mm_csMotion_panels_register()
     mm_csMotion_preview_register()
     mm_cutscene_preview_register()

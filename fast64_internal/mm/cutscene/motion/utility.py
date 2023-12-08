@@ -196,7 +196,7 @@ def setupActorCuePreview(csObj: Object, actorOrPlayer: str, selectObject: bool, 
 
         actorHeight = 1.5
         if actorOrPlayer == "Player":
-            actorHeight = 1.7 if bpy.context.scene.previewPlayerAge == "link_adult" else 1.3
+            actorHeight = 1.7 if bpy.context.scene.mmpreviewPlayerAge == "link_adult" else 1.3
 
         previewObj.empty_display_type = "SINGLE_ARROW"
         previewObj.empty_display_size = metersToBlend(bpy.context, actorHeight)

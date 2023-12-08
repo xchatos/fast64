@@ -258,7 +258,7 @@ def mm_csMotion_props_register():
     Armature.mmCamShotProp = PointerProperty(type=MMCSMotionCameraShotProperty)
     Bone.mmCamShotPointProp = PointerProperty(type=MMCSMotionCameraShotPointProperty)
     EditBone.mmCamShotPointProp = PointerProperty(type=MMCSMotionCameraShotPointProperty)
-    Scene.previewPlayerAge = EnumProperty(
+    Scene.mmpreviewPlayerAge = EnumProperty(
         items=[("link_adult", "Adult", "Adult Link (170 cm)", 0), ("link_child", "Child", "Child Link (130 cm)", 1)],
         name="Player Age for Preview",
         description="For setting Link's height for preview",
@@ -267,7 +267,7 @@ def mm_csMotion_props_register():
 
 
 def mm_csMotion_props_unregister():
-    del Scene.previewPlayerAge
+    del Scene.mmpreviewPlayerAge
     del EditBone.mmCamShotPointProp
     del Bone.mmCamShotPointProp
     del Armature.mmCamShotProp

@@ -103,7 +103,7 @@ def on_update_mm_render_settings(self, context: bpy.types.Context):
     if lMode == "0x01" or (lMode == "Custom" and not renderSettings.mmForceTimeOfDay):
         if renderSettings.mmLightIdx >= len(header.lightList):
             return
-        l = header.lightList[renderSettings.ootLightIdx]
+        l = header.lightList[renderSettings.mmLightIdx]
         renderSettings.ambientColor = tuple(c for c in l.ambient)
         col0, dir0 = mmGetBaseOrCustomLight(l, 0, False, False)
         renderSettings.lightColor = tuple(c for c in col0)
@@ -121,11 +121,11 @@ def on_update_mm_render_settings(self, context: bpy.types.Context):
         else:
             if renderSettings.mmLightIdx + 4 > len(header.lightList):
                 return
-            lights = header.lightList[renderSettings.mmLightIdx:renderSettings.ootLightIdx+4]
+            lights = header.lightList[renderSettings.mmLightIdx:renderSettings.mmLightIdx+4]
         assert len(lights) == 4
         todTimes = [0.0, 4.0, 6.0, 8.0, 16.0, 17.0, 19.0, 24.0]
         todSets  = [  3,   3,   0,   1,    1,    2,    3,    3]
-        t = renderSettings.ootTime
+        t = renderSettings.mmTime
         for i in range(len(todTimes) - 1):
             assert t >= todTimes[i]
             if t < todTimes[i+1]:
@@ -133,7 +133,7 @@ def on_update_mm_render_settings(self, context: bpy.types.Context):
                 fade = (t - todTimes[i]) / (todTimes[i+1] - todTimes[i])
                 break
         else:
-            raise PluginError("OoT time of day out of range")
+            raise PluginError("Mm time of day out of range")
         def interpColors(cola, colb, fade):
             cola = mathutils.Vector(tuple(c for c in cola))
             colb = mathutils.Vector(tuple(c for c in colb))
@@ -236,6 +236,9 @@ def poll_sm64_area(self, object):
 def poll_oot_scene(self, object):
     return object.ootEmptyType == "Scene"
 
+def poll_mm_scene(self, object):
+    return object.mmEmptyType == "Scene"
+
 
 def resync_scene_props():
     if "ShdCol_L" in bpy.data.node_groups and "GeometryNormal_WorldSpace" in bpy.data.node_groups:
@@ -329,29 +332,29 @@ class Fast64RenderSettings_Properties(bpy.types.PropertyGroup):
     )
     # MM
     mmSceneObject: bpy.props.PointerProperty(
-        name="Scene Object", type=bpy.types.Object, update=on_update_oot_render_settings, poll=poll_oot_scene
+        name="Scene Object", type=bpy.types.Object, update=on_update_mm_render_settings, poll=poll_mm_scene
     )
     mmSceneHeader: bpy.props.IntProperty(
         name="Header/Setup",
         description="Scene header / setup to use lighting data from",
         min=0, soft_max=10, default=0,
-        update=on_update_oot_render_settings,
+        update=on_update_mm_render_settings,
     )
     mmForceTimeOfDay: bpy.props.BoolProperty(
         name="Force Time of Day",
         description="Interpolate between four lights based on the time",
         default=False,
-        update=on_update_oot_render_settings,
+        update=on_update_mm_render_settings,
     )
     mmLightIdx: bpy.props.IntProperty(
         name="Light Index",
         min=0, soft_max=10, default=0,
-        update=on_update_oot_render_settings,
+        update=on_update_mm_render_settings,
     )
     mmTime: bpy.props.FloatProperty(
         name="Time of Day (Hours)",
         description="Time of day to emulate lighting conditions at, in hours",
         min=0.0, max=23.99, default = 10.0, precision=2, subtype="TIME", unit="TIME",
-        update=on_update_oot_render_settings,
+        update=on_update_mm_render_settings,
     )
     

@@ -278,7 +278,7 @@ class MMCutsceneProperty(PropertyGroup):
     def draw_props(self, layout: UILayout, obj: Object):
         split = layout.split(factor=0.5)
         split.label(text="Player Age for Preview")
-        split.prop(bpy.context.scene, "previewPlayerAge", text="")
+        split.prop(bpy.context.scene, "mmpreviewPlayerAge", text="")
 
         split = layout.split(factor=0.5)
         split.operator(MMCSMotionCreateCameraShot.bl_idname, icon="VIEW_CAMERA")

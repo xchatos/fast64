@@ -17,7 +17,7 @@ from .fast64_internal.utility_anim import utility_anim_register, utility_anim_un
 
 from .fast64_internal.mm import MM_Properties, mm_register, mm_unregister
 from .fast64_internal.mm.props_panel_main import MM_ObjectProperties
-#from .fast64_internal.utility_anim import utility_anim_register, utility_anim_unregister, ArmatureApplyWithMeshOperator
+from .fast64_internal.utility_anim import utility_anim_register, utility_anim_unregister, ArmatureApplyWithMeshOperator
 
 from .fast64_internal.f3d.f3d_material import mat_register, mat_unregister
 from .fast64_internal.f3d.f3d_render_engine import render_engine_register, render_engine_unregister
@@ -298,6 +298,7 @@ class Fast64_ObjectProperties(bpy.types.PropertyGroup):
 
     sm64: bpy.props.PointerProperty(type=SM64_ObjectProperties, name="SM64 Object Properties")
     oot: bpy.props.PointerProperty(type=OOT_ObjectProperties, name="OOT Object Properties")
+    mm: bpy.props.PointerProperty(type=MM_ObjectProperties, name="MM Object Properties")
 
 
 class UpgradeF3DMaterialsDialog(bpy.types.Operator):
