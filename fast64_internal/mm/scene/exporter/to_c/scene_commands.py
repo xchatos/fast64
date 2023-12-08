@@ -17,7 +17,8 @@ def getTransActorListCmd(outScene: MMScene, headerIndex: int):
 
 
 def getMiscSettingsCmd(outScene: MMScene):
-    return indent + f"SCENE_CMD_MISC_SETTINGS({outScene.cameraMode}, {outScene.mapLocation})"
+    return indent + "SCENE_CMD_MISC_SETTINGS()"
+    #return indent + f"SCENE_CMD_MISC_SETTINGS({outScene.cameraMode}, {outScene.mapLocation})"
 
 
 def getColHeaderCmd(outScene: MMScene):
@@ -31,7 +32,8 @@ def getSpawnListCmd(outScene: MMScene, headerIndex: int):
 
 
 def getSpecialFilesCmd(outScene: MMScene):
-    return indent + f"SCENE_CMD_SPECIAL_FILES({outScene.naviCup}, {outScene.globalObject})"
+    resScene = outScene.globalObject.strip("OBJECT_")
+    return indent + f"SCENE_CMD_SPECIAL_FILES({outScene.naviCup}, {resScene})"
 
 
 def getPathListCmd(outScene: MMScene, headerIndex: int):
@@ -47,9 +49,10 @@ def getSpawnActorListCmd(outScene: MMScene, headerIndex: int):
 
 
 def getSkyboxSettingsCmd(outScene: MMScene):
+    extTextureId = "0x00" #Todo: external texture?
     return (
         indent
-        + f"SCENE_CMD_SKYBOX_SETTINGS({outScene.skyboxID}, {outScene.skyboxCloudiness}, {outScene.skyboxLighting})"
+        + f"SCENE_CMD_SKYBOX_SETTINGS({extTextureId}, {outScene.skyboxID}, {outScene.skyboxCloudiness}, {outScene.skyboxLighting})"
     )
 
 

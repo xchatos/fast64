@@ -59,7 +59,7 @@ def getLightSettingsEntry(light: MMLight, lightMode: str, isLightingCustom: bool
 
 def getLightSettings(outScene: MMScene, headerIndex: int):
     lightSettingsData = CData()
-    lightName = f"EnvLightSettings {outScene.lightListName(headerIndex)}[{len(outScene.lights)}]"
+    lightName = f"LightSettings {outScene.lightListName(headerIndex)}[{len(outScene.lights)}]"
 
     # .h
     lightSettingsData.header = f"extern {lightName};\n"
@@ -137,7 +137,7 @@ def getRoomList(outScene: MMScene):
         )
     else:
         roomList.source += (
-            " },\n".join(indent + "{ " + f"(u32){startName}, (u32){stopName}" for startName, stopName in segNames)
+            " },\n".join(indent + "{ " + f"(uintptr_t){startName}, (uintptr_t){stopName}" for startName, stopName in segNames)
             + " },\n"
         )
 
