@@ -77,8 +77,8 @@ class MMExitProperty(PropertyGroup):
     exitIndexCustom: StringProperty(default="0x0000")
 
     # These are used when adding an entry to gEntranceTable
-    scene: EnumProperty(items=mmEnumSceneID, default="SCENE_DEKU_TREE")
-    sceneCustom: StringProperty(default="SCENE_DEKU_TREE")
+    scene: EnumProperty(items=mmEnumSceneID, default="SCENE_20SICHITAI2")
+    sceneCustom: StringProperty(default="SCENE_20SICHITAI2")
 
     # These are used when adding an entry to gEntranceTable
     continueBGM: BoolProperty(default=False)
@@ -467,7 +467,7 @@ class MMRemoveSceneSettingsProperty(PropertyGroup):
     name: StringProperty(name="Name", default="spot03")
     subFolder: StringProperty(name="Subfolder", default="overworld")
     customExport: BoolProperty(name="Custom Export Path")
-    option: EnumProperty(items=mmEnumSceneID, default="SCENE_DEKU_TREE")
+    option: EnumProperty(items=mmEnumSceneID, default="SCENE_20SICHITAI2")
 
     def draw_props(self, layout: UILayout):
         if self.option == "Custom":
@@ -485,7 +485,7 @@ class MMExportSceneSettingsProperty(PropertyGroup):
         default=False,
         description="Does not split the scene and rooms into multiple files.",
     )
-    option: EnumProperty(items=mmEnumSceneID, default="SCENE_DEKU_TREE")
+    option: EnumProperty(items=mmEnumSceneID, default="SCENE_20SICHITAI2")
 
     def draw_props(self, layout: UILayout):
         if self.customExport:
@@ -517,7 +517,7 @@ class MMImportSceneSettingsProperty(PropertyGroup):
     includePaths: BoolProperty(name="Paths", default=True)
     includeWaterBoxes: BoolProperty(name="Water Boxes", default=True)
     includeCutscenes: BoolProperty(name="Cutscenes", default=False)
-    option: EnumProperty(items=mmEnumSceneID, default="SCENE_DEKU_TREE")
+    option: EnumProperty(items=mmEnumSceneID, default="SCENE_20SICHITAI2")
 
     def draw_props(self, layout: UILayout, sceneOption: str):
         col = layout.column()

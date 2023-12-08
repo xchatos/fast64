@@ -97,7 +97,7 @@ def getInsertionIndex(scene, sceneNames, sceneName, index, mode):
     """Returns the index to know where to insert data"""
     # special case where the scene is "Inside the Great Deku Tree"
     # since it's the first scene simply return 0
-    if sceneName == "SCENE_DEKU_TREE":
+    if sceneName == "SCENE_20SICHITAI2":
         return 0
 
     # if index is None this means this is looking for ``original_scene_index - 1``

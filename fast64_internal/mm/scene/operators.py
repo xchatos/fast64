@@ -47,7 +47,7 @@ class MM_SearchSceneEnumOperator(Operator):
     bl_property = "mmSceneID"
     bl_options = {"REGISTER", "UNDO"}
 
-    mmSceneID: EnumProperty(items=mmEnumSceneID, default="SCENE_DEKU_TREE")
+    mmSceneID: EnumProperty(items=mmEnumSceneID, default="SCENE_20SICHITAI2")
     opName: StringProperty(default="Export")
 
     def execute(self, context):
