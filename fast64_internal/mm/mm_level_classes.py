@@ -166,6 +166,16 @@ class MMScene(MMCommonCommands):
 
     def alternateHeadersName(self):
         return self.sceneName() + "_alternateHeaders"
+    
+    def animMaterialsListName(self, headerIndex):
+        return self.sceneName() + "_header" + format(headerIndex, "02") + "_animMaterialsList"
+    
+    def minimapListName(self, headerIndex):
+        return self.sceneName() + "_header" + format(headerIndex, "02") + "_minimapList"
+
+    def actorCutsceneListName(self, headerIndex):
+        return self.sceneName() + "_header" + format(headerIndex, "02") + "_actorCutsceneList"
+
 
     def hasAlternateHeaders(self):
         return not (

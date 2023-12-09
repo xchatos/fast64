@@ -116,7 +116,7 @@ def getSpawnEntry(entrance: MMEntrance):
 def getSpawnList(outScene: MMScene, headerIndex: int):
     """Returns the spawn list for the current header"""
     spawnList = CData()
-    listName = f"Spawn {outScene.entranceListName(headerIndex)}"
+    listName = f"EntranceEntry {outScene.entranceListName(headerIndex)}"
 
     # .h
     spawnList.header = f"extern {listName}[];\n"
@@ -130,3 +130,66 @@ def getSpawnList(outScene: MMScene, headerIndex: int):
     )
 
     return spawnList
+
+
+def getActorCutsceneList(outScene: MMScene, headerIndex: int):
+    """Returns the spawn list for the current header"""
+    actorCsList = CData()
+    listName = f"ActorCutscene {outScene.actorCutsceneListName(headerIndex)}"
+
+    # .h
+    actorCsList.header = f"extern {listName}[];\n"
+
+    # .c
+    actorCsList.source = (
+        (f"{listName}[]" + " = {\n")
+        + (indent)
+        + "".join("{ -1, -1, -1, 0, -1, 0, 255, 0, 1, 32 },\n")
+        + "};\n\n"
+    )
+
+    return actorCsList
+
+def getAnimMaterialsList(outScene: MMScene, headerIndex: int):
+    """Returns the spawn list for the current header"""
+    animMatList = CData()
+    listName = f"AnimatedMaterial {outScene.animMaterialsListName(headerIndex)}"
+
+    # .h
+    animMatList.header = f"extern {listName}[];\n"
+
+    # .c
+    animMatList.source = (
+        (f"{listName}[]" + " = {\n")
+        + (indent)
+        + "".join("{ 0, 6, NULL },\n")
+        + "};\n\n"
+    )
+
+    return animMatList
+
+
+
+def getMinimapList(outScene: MMScene, headerIndex: int):
+    """Returns the spawn list for the current header"""
+    minimapList = CData()
+    listName = f"MinimapList {outScene.minimapListName(headerIndex)}"
+    listName2 = f"MinimapEntry {outScene.minimapListName(headerIndex)}"
+
+    # .h
+    minimapList.header = (f"extern {listName};\n"
+        + f"extern {listName2}_entries[];\n")
+
+    # .c
+    minimapList.source = (
+        (f"{listName}" + " = {\n")
+        + (indent)
+        + "".join(f"{outScene.minimapListName(headerIndex)}_entries, 0\n")
+        + "};\n\n"
+        + (f"{listName2}_entries[]" + " = {\n")
+        + (indent)
+        + "".join("{ 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000 },\n")
+        + "};\n\n"
+    )
+
+    return minimapList

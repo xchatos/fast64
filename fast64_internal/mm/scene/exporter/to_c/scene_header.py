@@ -3,7 +3,7 @@ from .....f3d.f3d_gbi import ScrollMethod, TextureExportSettings
 from ....mm_model_classes import MMGfxFormatter
 from ....mm_level_classes import MMScene, MMLight
 from .scene_pathways import getPathData
-from .actor import getTransitionActorList, getSpawnActorList, getSpawnList
+from .actor import getTransitionActorList, getSpawnActorList, getSpawnList, getAnimMaterialsList, getMinimapList, getActorCutsceneList
 from .scene_commands import getSceneCommandList
 
 
@@ -174,6 +174,10 @@ def getHeaderData(header: MMScene, headerIndex: int):
     # Write the path data, if used
     if len(header.pathList) > 0:
         headerData.append(getPathData(header, headerIndex))
+
+    headerData.append(getActorCutsceneList(header, headerIndex))
+    headerData.append(getMinimapList(header, headerIndex))
+    headerData.append(getAnimMaterialsList(header, headerIndex))
 
     return headerData
 

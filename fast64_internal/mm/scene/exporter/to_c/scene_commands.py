@@ -78,6 +78,18 @@ def getCutsceneDataCmd(outScene: MMScene, headerIndex: int):
     return indent + f"SCENE_CMD_CUTSCENE_DATA({csDataName})"
 
 
+def getAnimMaterialsCmd(outScene: MMScene, headerIndex: int):
+        return indent + f"SCENE_CMD_ANIMATED_MATERIAL_LIST({outScene.animMaterialsListName(headerIndex)})"
+
+def getMinimapListCmd(outScene: MMScene, headerIndex: int):
+        point = "&"
+        return indent + f"SCENE_CMD_MINIMAP_INFO({point}{outScene.minimapListName(headerIndex)})"
+
+def getActorCutsceneListCmd(outScene: MMScene, headerIndex: int):
+        count = "1"
+        return indent + f"SCENE_CMD_ACTOR_CUTSCENE_LIST({count}, {outScene.actorCutsceneListName(headerIndex)})"
+
+
 def getSceneCommandList(outScene: MMScene, headerIndex: int):
     cmdListData = CData()
     listName = f"SceneCmd {outScene.sceneName()}_header{headerIndex:02}"
@@ -91,7 +103,10 @@ def getSceneCommandList(outScene: MMScene, headerIndex: int):
         getSkyboxSettingsCmd,
     ]
 
-    getCmdFunc2ArgList = [getSpawnListCmd, getSpawnActorListCmd, getLightSettingsCmd]
+    getCmdFunc2ArgList = [
+        getSpawnListCmd, getSpawnActorListCmd, getLightSettingsCmd, 
+        getActorCutsceneListCmd, getMinimapListCmd, getAnimMaterialsCmd
+    ]
 
     if len(outScene.transitionActorList) > 0:
         getCmdFunc2ArgList.append(getTransActorListCmd)

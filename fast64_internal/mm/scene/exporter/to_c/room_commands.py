@@ -10,9 +10,16 @@ def getRoomBehaviourCmd(outRoom: MMRoom):
     showInvisibleActors = "true" if outRoom.showInvisibleActors else "false"
     disableWarpSongs = "true" if outRoom.disableWarpSongs else "false"
 
+    lensmode = "1" if outRoom.showInvisibleActors else "0"
+    rainOnDay2 = "0" #Todo setting
+    msgContext = "0" #Todo
+    showPosLights = "false" #Todo setting
+    #join([outRoom.roomBehaviour, outRoom.linkIdleMode, showInvisibleActors, disableWarpSongs])
+
+    #Todo link idle -> room weather?
     return (
         (indent + "SCENE_CMD_ROOM_BEHAVIOR(")
-        + ", ".join([outRoom.roomBehaviour, outRoom.linkIdleMode, showInvisibleActors, disableWarpSongs])
+        + ", ".join([outRoom.roomBehaviour, outRoom.linkIdleMode, lensmode, msgContext, showPosLights, rainOnDay2])
         + ")"
     )
 
