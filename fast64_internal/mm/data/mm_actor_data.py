@@ -17,8 +17,6 @@ class Mm_ActorData:
         # Path to the ``ActorList.xml`` file
         actorXML = path.dirname(path.abspath(__file__)) + "\\xml\\ActorList.xml"
 
-        actorXML = "G:\\Misc Repos\\fast64\\fast64_internal\\mm\\data\\xml\\ActorList.xml"
-
         print("starting getXMLRoot" + actorXML)
         actorRoot = getXMLRoot(actorXML)
 
