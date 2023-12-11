@@ -373,7 +373,7 @@ def readRoomData(
     else:
         room.timeHours = roomHeader.timeHours
         room.timeMinutes = roomHeader.timeMinutes
-    room.timeSpeed = max(-128, min(127, int(round(roomHeader.timeSpeed * 0xA))))
+    room.timeSpeed = roomHeader.timeSpeed
     room.disableSkybox = roomHeader.disableSkybox
     room.disableSunMoon = roomHeader.disableSunMoon
     room.echo = roomHeader.echo

@@ -112,7 +112,7 @@ class MMRoomHeaderProperty(PropertyGroup):
     leaveTimeUnchanged: BoolProperty(name="Leave Time Unchanged", default=True)
     timeHours: IntProperty(name="Hours", default=0, min=0, max=23)  # 0xFFFE
     timeMinutes: IntProperty(name="Minutes", default=0, min=0, max=59)
-    timeSpeed: FloatProperty(name="Time Speed", default=1, min=-13, max=13)  # 0xA
+    timeSpeed: IntProperty(name="Time Speed, MM Default is 3. At 0 time doesnt pass and the clock is hidden", default=3, min=0, max=254) 
 
     disableSkybox: BoolProperty(name="Disable Skybox")
     disableSunMoon: BoolProperty(name="Disable Sun/Moon")
