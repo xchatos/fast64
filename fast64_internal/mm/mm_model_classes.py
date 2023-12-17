@@ -338,7 +338,7 @@ class MMF3DContext(F3DContext):
         self.isBillboard = False
         self.flipbooks = {}  # {(segment, draw layer) : TextureFlipbook}
 
-        materialContext = createF3DMat(None, preset="mm_shaded_solid")
+        materialContext = createF3DMat(None, preset="oot_shaded_solid")
         # materialContext.f3d_mat.rdp_settings.g_mdsft_cycletype = "G_CYC_1CYCLE"
         F3DContext.__init__(self, f3d, basePath, materialContext)
 

@@ -95,7 +95,7 @@ def mmProcessBone(
     if isinstance(parentLimb, MMSkeleton):
         skeleton = parentLimb
         limb = MMLimb(skeleton.name, boneName, nextIndex, translate, DL, None)
-        skeleton.limbRmm = limb
+        skeleton.limbRoot = limb
     else:
         limb = MMLimb(parentLimb.skeletonName, boneName, nextIndex, translate, DL, None)
         parentLimb.children.append(limb)

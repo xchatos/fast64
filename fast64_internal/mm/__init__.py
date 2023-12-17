@@ -89,7 +89,7 @@ def mm_panel_register():
     mm_spline_panels_register()
     mm_anim_panels_register()
     mm_skeleton_panels_register()
-    #mm_cutscene_panels_register()
+    mm_cutscene_panels_register()
 
 
 def mm_panel_unregister():
@@ -101,7 +101,7 @@ def mm_panel_unregister():
     mm_f3d_panels_unregister()
     mm_anim_panels_unregister()
     mm_skeleton_panels_unregister()
-    #mm_cutscene_panels_unregister()
+    mm_cutscene_panels_unregister()
 
 
 def mm_register(registerPanels):
@@ -127,8 +127,8 @@ def mm_register(registerPanels):
     mm_file_register()
     mm_anim_props_register()
 
-    #mm_csMotion_ops_register()
-    #mm_csMotion_props_register()
+    mm_csMotion_ops_register()
+    mm_csMotion_props_register()
     mm_csMotion_panels_register()
     mm_csMotion_preview_register()
     mm_cutscene_preview_register()
@@ -169,8 +169,8 @@ def mm_unregister(unregisterPanels):
     mm_cutscene_preview_unregister()
     mm_csMotion_preview_unregister()
     mm_csMotion_panels_unregister()
-    #mm_csMotion_props_unregister()
-    #mm_csMotion_ops_unregister()
+    mm_csMotion_props_unregister()
+    mm_csMotion_ops_unregister()
 
     if unregisterPanels:
         mm_panel_unregister()

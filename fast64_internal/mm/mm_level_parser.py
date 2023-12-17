@@ -1201,7 +1201,7 @@ def parseCollision(
     for (surface, polygonParams), triList in collisionDict.items():
         randomColor = mathutils.Color((1, 1, 1))
         randomColor.hsv = (random(), 0.5, 0.5)
-        collisionMat = getColliderMat(f"mm_collision_mat_{surfaceIndex}", randomColor[:] + (0.5,))
+        collisionMat = getColliderMat(f"oot_collision_mat_{surfaceIndex}", randomColor[:] + (0.5,))
         collision = collisionMat.mmCollisionProperty
         parseSurfaceParams(surface, polygonParams, collision)
 

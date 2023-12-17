@@ -22,8 +22,8 @@ from .mm_model_classes import (
 
 # Creates a semi-transparent solid color material (cached)
 def getColliderMat(name: str, color: tuple[float, float, float, float]) -> bpy.types.Material:
-    if "mm_collision_mat_base" not in bpy.data.materials:
-        baseMat = createF3DMat(None, preset="mm_shaded_texture_transparent", index=0)
+    if "oot_collision_mat_base" not in bpy.data.materials:
+        baseMat = createF3DMat(None, preset="oot_shaded_texture_transparent", index=0)
         with F3DMaterial_UpdateLock(baseMat) as lockedMat:
             lockedMat.name = name
             lockedMat.f3d_mat.combiner1.A = "0"
@@ -34,7 +34,7 @@ def getColliderMat(name: str, color: tuple[float, float, float, float]) -> bpy.t
             update_preset_manual(lockedMat, bpy.context)
 
     if name not in bpy.data.materials:
-        baseMat = bpy.data.materials["mm_collision_mat_base"]
+        baseMat = bpy.data.materials["oot_collision_mat_base"]
         baseMat.f3d_update_flag = True
         newMat = baseMat.copy()
         baseMat.f3d_update_flag = False

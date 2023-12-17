@@ -89,7 +89,7 @@ def oot_panel_register():
     spline_panels_register()
     anim_panels_register()
     skeleton_panels_register()
-    cutscene_panels_register()
+    #cutscene_panels_register()
 
 
 def oot_panel_unregister():
@@ -101,7 +101,7 @@ def oot_panel_unregister():
     f3d_panels_unregister()
     anim_panels_unregister()
     skeleton_panels_unregister()
-    cutscene_panels_unregister()
+    #cutscene_panels_unregister()
 
 
 def oot_register(registerPanels):
@@ -127,11 +127,11 @@ def oot_register(registerPanels):
     file_register()
     anim_props_register()
 
-    csMotion_ops_register()
-    csMotion_props_register()
-    csMotion_panels_register()
-    csMotion_preview_register()
-    cutscene_preview_register()
+    #csMotion_ops_register()
+    #csMotion_props_register()
+    #csMotion_panels_register()
+    #csMotion_preview_register()
+    #cutscene_preview_register()
 
     for cls in oot_classes:
         register_class(cls)
@@ -166,11 +166,11 @@ def oot_unregister(unregisterPanels):
     file_unregister()
     anim_props_unregister()
 
-    cutscene_preview_unregister()
-    csMotion_preview_unregister()
-    csMotion_panels_unregister()
-    csMotion_props_unregister()
-    csMotion_ops_unregister()
+    #cutscene_preview_unregister()
+    #csMotion_preview_unregister()
+    #csMotion_panels_unregister()
+    #csMotion_props_unregister()
+    #csMotion_ops_unregister()
 
     if unregisterPanels:
         oot_panel_unregister()
